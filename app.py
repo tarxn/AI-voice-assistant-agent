@@ -6,7 +6,7 @@ from fastapi import FastAPI, WebSocket, Request
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse, Response
 from fastapi.websockets import WebSocketDisconnect
 from twilio.twiml.voice_response import VoiceResponse, Connect
-from config import ngrok_auth_token, real_agent_no
+from config import ngrok_auth_token, real_agent_no, twilio_sid, twilio_token
 from call_stream import twilio_audio_encoded_chunk, web_audio_decoded_chunk, playback_audio, normalize_audio
 from config import SHOW_TIMING_MATH, VOICE, LOG_EVENT_TYPES, SHOW_TIMING_MATH, PORT, OPENAI_API_KEY, SYSTEM_MESSAGE, WEB_SR
 from scipy.io.wavfile import write
@@ -112,7 +112,6 @@ async def call_stream(websocket: WebSocket):
 
         async def recieve_audio_from_twilio():
             nonlocal stream_sid
-            audio_buffer = []
             while True:
                 message = await websocket.receive_text()
                 data = json.loads(message)
@@ -224,15 +223,15 @@ async def handle_media_stream(websocket: WebSocket):
                     print("Closing the AI WebSocket...")
                     await openai_ws.close()
 
-                account_sid = "AC72ec7a32ee399c84e26f9bd55aefc2c5"
-                auth_token = "223dcceed21ed24600dada97cd92aba5"
+                account_sid = twilio_sid
+                auth_token = twilio_token
                 client = Client(account_sid, auth_token)
                 client.calls(stream_sid).update(
                     twiml='''
                     <Response>
                         <Say>Connecting you to a human agent. Please hold.</Say>
                         <Connect>
-                            <Stream url="wss://1afb-2405-201-c417-9020-54f3-740-9ec9-a732.ngrok-free.app/call-stream"/>
+                            <Stream url="wss://a0fe-2405-201-c417-9020-3829-2aa5-886-482e.ngrok-free.app/call-stream"/>
                         </Connect>
                     </Response>
                     '''
