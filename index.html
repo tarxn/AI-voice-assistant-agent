@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Call Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.get-call {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button.answer-call {
+            background-color: #008CBA;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Agent Call Interface</h1>
+        <button class="get-call" onclick="getCall()">Get Call</button>
+        <button class="answer-call" onclick="answerCall()" disabled>Answer Call</button>
+    </div>
+    <script>
+        function getCall() {
+            alert("Incoming call simulated.");
+            document.querySelector('.answer-call').disabled = false;
+        }
+
+        function answerCall() {
+            alert("Call answered.");
+        }
+    </script>
+</body>
+</html>
